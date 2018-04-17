@@ -14,6 +14,16 @@
         }
         return $output;
     }
+    function fill_product($db){
+        $output='';
+        $sql="SELECT * FROM prodotti";
+        $result=mysqli_query($db, $sql);
+        
+        while ($row3= mysqli_fetch_row($result)){
+            $output.='<input type="text" class="form-control price"  value="'.$row3["prezzo"].'">';
+        }
+        return $output;
+    }
 
 
 
@@ -55,7 +65,7 @@ var tr = '<tr>'+
 '<td><select name="productname[]" id=productname>'+
 '<option value="Select product">Select product</option><?php echo fill_brand($db);?></select></td>'+
 '<td><input type="text" class="form-control quantity" name="quantity[]"></td>'+  
-'<td><input type="text" class="form-control price" name="price[]"></td>'+  
+'<td><?php echo fill_product($db);?></td>'+  
 '<td><input type="text" class="form-control discount" name="discount[]"></td>'+
 '<td><select name="iva[]"><option value="4">4</option><option value="10">10</option><option value="22">22</option></select></td>'+
 '<td><input type="text" class="form-control amount" name="amount[]"></td>'+  
@@ -147,7 +157,8 @@ $('.detail').append(tr);
         ?>        
     </select></td>  
                                 <td><input type="text" class="form-control quantity" name="quantity[]"></td>  
-                                <td><input type="text" class="form-control price" name="price[]"></td>  
+                                
+                                <td><?php echo fill_product($db)?></td>
                                 <td><input type="text" class="form-control discount" name="discount[]"></td>
                                 <td><select name="iva[]">
                                         <option value="4">4</option>
@@ -175,38 +186,6 @@ $('.detail').append(tr);
                         </div>
 </form>  
             
-            <?php
-$q = $_GET['codice'];
-
-mysqli_select_db($db,"ajax_demo");
-$sql="SELECT * FROM prodotti WHERE codice = '".$q."'";
-$result = mysqli_query($db,$sql);
-
-echo "<table class='table table-bordered table-hover'>
-<thead>  
-                            <th>No</th>  
-                            <th>Codice Prodotto</th>
-                            <th>Product Name</th>  
-                            <th>Quantity</th>  
-                            <th>Price</th>  
-                            <th>Discount</th>  
-                            <th>Iva</th>
-                            <th>Amount</th>  
-                            <th></th>  
-                        </thead>  
-                        <tbody class='detail'>";
-while($row = mysqli_fetch_array($result)) {
-    echo "<tr>";
-    echo "<td>" . $row['codice'] . "</td>";
-    echo "<td>" . $row['descrizione'] . "</td>";
-    echo "<td>" . $row['prezzo'] . "</td>";
-    echo "<td>" . $row['iva'] . "</td>";
-    echo "</tr>";
-}
-echo "</table>";
-
-?>
-    
 
         </body>
     </html>
