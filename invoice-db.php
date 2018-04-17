@@ -47,12 +47,12 @@ if(isset($_POST['save']))
 //$id=mysqli_insert_id();  
 for($i = 0; $i<count($_POST['productname']); $i++)  
 {  
-mysqli_query($db,"INSERT INTO prodotti  
+mysqli_query($db,"INSERT INTO fattura  
 SET  
-codice = '{$_POST['codiceprodotto'][$i]}',
-invoiceID = '{$fatturanumero}',
+codiceprodotto = '{$_POST['codiceprodotto'][$i]}',
+numerofattura = '{$fatturanumero}',
 descrizione = '{$_POST['productname'][$i]}',  
-clientID = '$coddcliente', 
+codicecliente = '$coddcliente', 
 prezzo = '{$_POST['price'][$i]}',
 iva = '{$_POST['iva'][$i]}',  
 quantita = '{$_POST['quantity'][$i]}',
@@ -202,9 +202,9 @@ $pdf->Cell(10, 4, 'IVA','TRB',1);
 
 $codicecliente2 = $_REQUEST["client"];
 
-//$queryclient = $db->query("select * from prodotti where clientID = (select codicecliente from clienti where ragionesociale = '$client') and invoiceID = $fatturanumero");
-$queryclient = $db->query("select * from prodotti where clientID = '$coddcliente' and invoiceID='$fatturanumero' ");
-$querycount=$db->query("select count(*) as total from prodotti where clientID = '$coddcliente' and invoiceID='$fatturanumero'");
+$queryclient = $db->query("select * from fattura where codicecliente = '$coddcliente' and numerofattura='$fatturanumero' ");
+
+$querycount=$db->query("select count(*) as total from fattura where codicecliente = '$coddcliente' and numerofattura='$fatturanumero'");
 //for ($i=0;$i<29;$i++){
 $ii= mysqli_fetch_assoc($querycount);
 $cc=$ii['total'];
@@ -212,7 +212,7 @@ $cc=$ii['total'];
 for($i = 0; $i<$cc; $i++)  
 {  
     $item = mysqli_fetch_array($queryclient);
-    $pdf->Cell(30, 4,$item['codice'],'',0);
+    $pdf->Cell(30, 4,$item['codiceprodotto'],'',0);
     $pdf->Cell(70,4,$item['descrizione'],'',0);
     $pdf->Cell(20,4,$item['quantita'],'',0);
     $pdf->Cell(20,4,$item['prezzo'],'',0);

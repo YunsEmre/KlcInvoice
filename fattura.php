@@ -136,13 +136,14 @@ $('.detail').append(tr);
                             <tr>  
                                 <td class="no">1</td>  
                                 <td><input type="text" class="form-control productname" name="codiceprodotto[]"></td>
-                                <td><select name="productname[]" onchange="showUser(this.value)">
+                                <td><select name="productname[]" >
         <option value="Select product" name="productname[]">Select product</option>
        <?php
-        while ($row2 = mysqli_fetch_array($resultprodotti)) {
-            echo "<option value='" . $row2['codice'] . "'>" . $row2['descrizione'] . "</option>";
-
-        }
+               echo fill_brand($db);
+//        while ($row2 = mysqli_fetch_array($resultprodotti)) {
+//            echo "<option value='" . $row2['codice'] . "'>" . $row2['descrizione'] . "</option>";
+//
+//        }
         ?>        
     </select></td>  
                                 <td><input type="text" class="form-control quantity" name="quantity[]"></td>  
